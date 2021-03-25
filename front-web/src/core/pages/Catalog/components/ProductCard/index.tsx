@@ -1,4 +1,5 @@
 import { ReactComponent as ProductImage } from '../../../../assets/images/product.svg';
+import ProductPrice from '../../../../components/ProductPrice';
 import './styles.scss';
 
 function ProductCard(){
@@ -9,10 +10,7 @@ function ProductCard(){
                 <h6 className="product-name">
                     Computador Desktop - Intel Core i7
                 </h6>
-                <div className="product-price-container">
-                    <span className="product-currency">R$</span>
-                    <h3 className="product-price">2.779,00</h3>
-                </div>
+                <ProductPrice price="2.779,00"/>
             </div>
         </div>
     );

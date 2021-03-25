@@ -17,7 +17,7 @@ function Navbar(){
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/catalog" activeClassName="active">
+                        <NavLink to="/products" activeClassName="active">
                             CATALOGO
                         </NavLink>
                     </li>
