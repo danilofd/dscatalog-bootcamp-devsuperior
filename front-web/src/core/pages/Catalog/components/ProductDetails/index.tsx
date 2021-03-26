@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { ReactComponent as ArrowIcon } from '../../../../assets/images/arrow.svg';
-import ProductPrice from '../../../../components/ProductPrice';
-import { Product } from '../../../../types/Product';
-import { makeRequest } from '../../../../utils/request';
+import { ReactComponent as ArrowIcon } from 'core/assets/images/arrow.svg';
+import ProductPrice from 'core/components/ProductPrice';
+import { Product } from 'core/types/Product';
+import { makeRequest } from 'core/utils/request';
+import ProductDescriptionLoader from '../Loaders/ProductDescriptionLoader';
+import ProductInfoLoader from '../Loaders/ProductInfoLoader';
 import './styles.scss';
 
 type ParamsType = {
@@ -16,14 +18,19 @@ function ProductDetails() {
     const { productId } = useParams<ParamsType>();
 
     const [product, setProduct] = useState<Product>();
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const params = {
             page: 0,
             linesPerPage: 12
         }
+        setIsLoading(true);
         makeRequest({url: `/products/${productId}`, params})
-            .then(response => setProduct(response.data));
+            .then(response => setProduct(response.data))
+            .finally(() => {
+                setIsLoading(false);
+            })
     }, [productId]);
 
     return (
@@ -35,21 +42,30 @@ function ProductDetails() {
                 </Link>
                 <div className="row">
                     <div className="col-6 pr-5">
-                        <div className="product-details-card text-center">
-                            <img src={product?.imgUrl} alt={product?.name} className="product-details-image"/>
-                        </div>
-                        <h1 className="product-details-name">
-                            {product?.name}
-                        </h1>
-                        { product?.price && <ProductPrice price={product?.price} />}
+                        {isLoading ? <ProductInfoLoader /> : (
+                            <>
+                            <div className="product-details-card text-center">
+                                <img src={product?.imgUrl} alt={product?.name} className="product-details-image"/>
+                            </div>
+                            <h1 className="product-details-name">
+                                {product?.name}
+                            </h1>
+                            { product?.price && <ProductPrice price={product?.price} />}
+                        </>
+                        )}
+                        
                     </div>
                     <div className="col-6 product-details-card">
+                    {isLoading ? <ProductDescriptionLoader /> : (
+                        <>
                         <h1 className="product-description-title">
                             Descricao do Produto
                         </h1>
                         <p className="product-description-text">
                             {product?.description}
                         </p>
+                    </>
+                    )}
                     </div>
                 </div>
             </div>
