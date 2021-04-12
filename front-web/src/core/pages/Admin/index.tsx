@@ -1,7 +1,10 @@
+import Navbar from './components';
+import './styles.scss';
+
 function Admin(){
     return (
         <div>
-            <h1>Admin</h1>
+            <Navbar />
         </div>
     );
 }
