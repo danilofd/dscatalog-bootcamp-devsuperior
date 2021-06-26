@@ -18,7 +18,7 @@ function Navbar() {
                 <li>
                     <NavLink to="/admin/users" className="admin-nav-item">
                         Meus Usuarios
-                        </NavLink>
+                    </NavLink>
                 </li>
             </ul>
         </nav>
